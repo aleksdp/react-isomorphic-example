@@ -5,36 +5,8 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 const isDev = process.env.NODE_ENV == 'development'
 
-const entry = [
-    './src/index.js'
-]
-const plugins = [
-    new webpack.DefinePlugin({
-        'process.env': {
-            NODE_ENV: isDev ? '"development"' : '"production"'
-        },
-        _development_: isDev
-    }),
-    new webpack.optimize.OccurrenceOrderPlugin()
-]
-if (isDev) {
-    entry.unshift('react-hot-loader/patch')
-    entry.unshift('webpack-hot-middleware/client')
-    plugins.push(new webpack.HotModuleReplacementPlugin())
-    plugins.push(new webpack.NamedModulesPlugin())
-} else {
-    plugins.push(new ExtractTextPlugin('style.css'))
-
-    plugins.push(new webpack.optimize.UglifyJsPlugin({
-        compress: {
-            warnings: false
-        }
-    }))
-}
-
-
-module.exports = {
-    entry,
+const config = {
+    entry: [],
     output: {
         filename: 'bundle.js',
         path: resolve(__dirname, './public'),
@@ -58,24 +30,23 @@ module.exports = {
 
     module: {
         rules: [
-
             {
                 test: /\.(js|jsx)/,
                 exclude: /(node_modules)/,
                 loader: 'babel-loader',
                 query: {
+                    babelrc: false,
                     presets: [
-                        ["es2015", {"modules": false}],
                         "react",
-                        "stage-0",
+                        ["es2015", {"modules": false}],
+                        "stage-0"
                     ],
                     plugins: [
                         "transform-runtime",
-                        "add-module-exports",
                         "transform-decorators-legacy",
-                        "transform-react-display-name"]
+                        "react-hot-loader/babel"
+                    ]
                 }
-
             },
             {
                 test: /\.jpg$/,
@@ -121,5 +92,45 @@ module.exports = {
         ]
     },
 
-    plugins
+    plugins: [
+        new webpack.DefinePlugin({
+            'process.env': {
+                NODE_ENV: isDev ? '"development"' : '"production"'
+            },
+            _development_: isDev
+        }),
+        new webpack.optimize.OccurrenceOrderPlugin()
+    ]
 }
+
+
+if (isDev) {
+    config.entry = [
+        'react-hot-loader/patch',
+        'webpack-hot-middleware/client'
+    ]
+    config.plugins.push(new webpack.HotModuleReplacementPlugin())
+    config.plugins.push(new webpack.NamedModulesPlugin())
+    config.module.rules.unshift(
+        {
+            test: /\.(js|jsx)/,
+            exclude: /(node_modules)/,
+            enforce: 'pre',
+            use: [{loader: 'eslint-loader', options: {rules: {semi: 0}}}],
+        }
+    )
+} else {
+    config.plugins.push(new ExtractTextPlugin('style.css'))
+    config.plugins.push(new webpack.optimize.UglifyJsPlugin({
+        compress: {
+            warnings: false
+        }
+    }))
+}
+
+config.entry.push(
+    './src/index.js'
+)
+
+
+module.exports = config

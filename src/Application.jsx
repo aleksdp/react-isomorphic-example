@@ -1,23 +1,27 @@
 import React from 'react'
-import {Provider} from 'react-redux'
-import {Router, browserHistory} from 'react-router'
-import {syncHistoryWithStore} from 'react-router-redux'
-import configureStore from './store/configureStore'
+import {Router} from 'react-router'
 import {routes} from './Routes.jsx'
-import {AsyncLoader, setBaseUrl} from 'react-isomorphic-tools'
-import config from '../config'
+import {AsyncLoader} from 'react-isomorphic-tools'
+import {Provider} from 'react-redux'
 
-setBaseUrl(config.baseUrl)
 
-const store = configureStore()
 
-export default ()=>(
-    <Provider store={store} key="provider">
-        <Router routes={routes} history={syncHistoryWithStore(browserHistory, store, {
-            selectLocationState (state) {
-                return state.get('routing').toJS()
-            }
-        })}
-                render={(props)=><AsyncLoader {...props}/>}/>
-    </Provider>
-)
+export default class Application extends React.Component {
+    static propTypes = {
+        history: React.PropTypes.object.isRequired,
+        store: React.PropTypes.object.isRequired
+    }
+
+    render() {
+        const {history, store} = this.props
+        return (
+            <Provider store={store} key="provider">
+                <Router history={history}
+                        render={(props)=><AsyncLoader {...props}/>}>
+                    {routes}
+                </Router>
+            </Provider>
+        )
+    }
+}
+

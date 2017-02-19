@@ -1,6 +1,5 @@
 const path = require("path")
 const fs = require("fs")
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const webpack = require('webpack')
 
 const config = require('./webpack.config')
@@ -34,15 +33,6 @@ config.output = {
     filename: "server.js",
 }
 
-config.plugins = [
-    new ExtractTextPlugin('style.css'),
-    new webpack.optimize.UglifyJsPlugin({
-        compress: {
-            warnings: false
-        }
-    }),
-    new webpack.IgnorePlugin(/vertx/)
-]
-
+config.plugins.push(new webpack.IgnorePlugin(/vertx/))
 
 module.exports = config

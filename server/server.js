@@ -14,11 +14,12 @@ import webpackConfig from '../webpack.config'
 import page from './page'
 import configureStore from './configureStore'
 import {routes} from '../src/Routes'
-import loadOnServer from 'react-isomorphic-tools/helpers/loadOnServer'
+import {loadOnServer} from 'react-isomorphic-tools'
 const app = express();
 
-import {baseUrl} from '../config'
+import config from '../config'
 
+const {baseUrl} = config()
 
 if (process.env.NODE_ENV == 'development') {
     const compiler = webpack(webpackConfig)

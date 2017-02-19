@@ -1,18 +1,20 @@
 import React from 'react'
-import {Link} from 'react-router'
 import {ImmutableLoadingBar as LoadingBar} from 'react-redux-loading-bar'
-import {connect} from 'react-redux'
 import Helmet from 'react-helmet'
+import {Link} from 'react-router'
 
-@connect(state=>({
-    preload: state.preload
-}))
-export default class App extends React.Component {
+class App extends React.Component {
     render() {
         return (
             <div>
-                <LoadingBar />
-
+                <LoadingBar style={{
+                    backgroundColor: '#f00',
+                    top: 0,
+                    height: '2px',
+                    zIndex: '10000',
+                    position: 'fixed',
+                    boxShadow: '1px 1px 4px 0px rgba(50, 50, 50, 0.75)'
+                }}/>
                 <Helmet
                     title='App'
 
@@ -21,19 +23,19 @@ export default class App extends React.Component {
                     ]}
 
                 />
-                {JSON.stringify(this.props.preload)}
-
-                App component
-                <div className='test'>test</div>
                 <div>
-                    <Link to="/test1">to test</Link><br/>
-                    <Link to="/test2?q=test">to test</Link><br/>
-                    <Link to="/test2">to test</Link><br/>
+                    App component
+                    <div>
+                        <Link to="/test1">to /test1</Link>
+                    </div>
+                    <div>
+                        <Link to="/test2?q=test">to /test2?q=test</Link>
+                    </div>
                 </div>
-
+                <hr/>
                 {this.props.children}
-
             </div>
         )
     }
 }
+export default App
