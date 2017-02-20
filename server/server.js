@@ -14,7 +14,7 @@ import webpackConfig from '../webpack.config'
 import page from './page'
 import configureStore from './configureStore'
 import {routes} from '../src/Routes'
-import loadOnServer from '../react-isomorphic-tools/helpers/loadOnServer'
+import loadOnServer from '../react-isomorphic-tools/src/helpers/loadOnServer'
 const app = express();
 
 import config from '../config'

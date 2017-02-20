@@ -4,6 +4,21 @@ import {connect} from 'react-redux'
 import Helmet from 'react-helmet'
 import {Link} from 'react-router'
 
+
+const test = async () => dispatch => {
+
+    dispatch({
+        type: '@FETCH_DATA/PUSH',
+        meta:{
+            keys: ['users', 'response', 'items']
+        },
+        payload: await fetcher('/events', {params: })
+    })
+
+
+}
+
+
 @connect(state=>({
     preload: state.preload
 }))
