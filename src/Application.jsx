@@ -1,10 +1,8 @@
-import React from 'react'
-import {Router} from 'react-router'
-import {routes} from './Routes.jsx'
-import {AsyncLoader} from '../react-isomorphic-tools/src/lib'
-import {Provider} from 'react-redux'
-
-
+import React from "react"
+import {Router} from "react-router"
+import {routes} from "./Routes.jsx"
+import {AsyncLoader} from "../react-isomorphic-tools/src/lib"
+import {Provider} from "react-redux"
 
 export default class Application extends React.Component {
     static propTypes = {
