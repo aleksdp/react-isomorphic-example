@@ -4,7 +4,7 @@
   "description": "react",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=development node server",
+    "start": "node server",
     "prod": "node build/server.js",
     "build": "npm run build-server; npm run build-client",
     "build-client": "NODE_ENV=production ./node_modules/.bin/webpack --progress --display-error-details --colors --optimize-minimize",
