@@ -20,7 +20,7 @@ import proxy from 'express-http-proxy'
 
 import config from '../config'
 
-const {baseUrl, domain} = config()
+const {domain} = config()
 
 if (process.env.NODE_ENV == 'development') {
     const compiler = webpack(webpackConfig)
@@ -57,7 +57,7 @@ app.use((req, res)=> {
             res.redirect(302, redirect.pathname + redirect.search)
         } else if (renderProps) {
             const unplug = plugToRequest(req, res)
-            loadOnServer({store, renderProps, redirect, baseUrl}).then(
+            loadOnServer({store, renderProps, redirect}).then(
                 ()=> {
                     // const html = ReactDOMServer.renderToString(
                     //     <Provider store={store}>
