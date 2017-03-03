@@ -1,3 +1,6 @@
+const domain = "http://api.itboost.org:82"
+
 export default {
-    baseUrl: "http://api.itboost.org:82/app_dev.php/api"
+    domain,
+    baseUrl: `${domain}/app_dev.php/api`
 }
