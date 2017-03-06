@@ -1,9 +1,10 @@
 0 info it worked if it ends with ok
-1 verbose cli [ '/usr/local/Cellar/node/7.5.0/bin/node',
-1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli [ '/usr/local/Cellar/node/7.4.0/bin/node',
+1 verbose cli   '/usr/local/lib/node_modules/npm/bin/npm-cli.js',
+1 verbose cli   'run-script',
 1 verbose cli   'start' ]
-2 info using npm@4.1.2
-3 info using node@v7.5.0
+2 info using npm@4.0.5
+3 info using node@v7.4.0
 4 verbose run-script [ 'prestart', 'start', 'poststart' ]
 5 info lifecycle react-skeleton@1.0.0~prestart: react-skeleton@1.0.0
 6 silly lifecycle react-skeleton@1.0.0~prestart: no script for prestart, continuing
@@ -18,18 +19,18 @@
 14 verbose stack Exit status 1
 14 verbose stack     at EventEmitter.<anonymous> (/usr/local/lib/node_modules/npm/lib/utils/lifecycle.js:279:16)
 14 verbose stack     at emitTwo (events.js:106:13)
-14 verbose stack     at EventEmitter.emit (events.js:192:7)
+14 verbose stack     at EventEmitter.emit (events.js:191:7)
 14 verbose stack     at ChildProcess.<anonymous> (/usr/local/lib/node_modules/npm/lib/utils/spawn.js:40:14)
 14 verbose stack     at emitTwo (events.js:106:13)
-14 verbose stack     at ChildProcess.emit (events.js:192:7)
-14 verbose stack     at maybeClose (internal/child_process.js:890:16)
+14 verbose stack     at ChildProcess.emit (events.js:191:7)
+14 verbose stack     at maybeClose (internal/child_process.js:885:16)
 14 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:226:5)
 15 verbose pkgid react-skeleton@1.0.0
 16 verbose cwd /Users/alex/projects/react-isomorphic-example-dev
-17 error Darwin 16.3.0
-18 error argv "/usr/local/Cellar/node/7.5.0/bin/node" "/usr/local/bin/npm" "start"
-19 error node v7.5.0
-20 error npm  v4.1.2
+17 error Darwin 15.5.0
+18 error argv "/usr/local/Cellar/node/7.4.0/bin/node" "/usr/local/lib/node_modules/npm/bin/npm-cli.js" "run-script" "start"
+19 error node v7.4.0
+20 error npm  v4.0.5
 21 error code ELIFECYCLE
 22 error react-skeleton@1.0.0 start: `NODE_ENV=development node server`
 22 error Exit status 1

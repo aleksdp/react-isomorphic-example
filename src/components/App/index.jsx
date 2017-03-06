@@ -3,7 +3,11 @@ import {ImmutableLoadingBar as LoadingBar} from "react-redux-loading-bar"
 import {connect} from "react-redux"
 import Helmet from "react-helmet"
 import {Link} from "react-router"
+import config from "../../../config"
+import {setBaseUrl} from "../../../react-isomorphic-tools/src/lib"
 
+const {baseUrl} = config()
+setBaseUrl(baseUrl)
 
 @connect(state=>({
     preload: state.preload

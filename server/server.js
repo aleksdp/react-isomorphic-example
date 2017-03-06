@@ -17,9 +17,6 @@ import {routes} from '../src/Routes'
 import loadOnServer from '../react-isomorphic-tools/src/helpers/loadOnServer'
 const app = express();
 
-import config from '../config'
-
-const {baseUrl} = config()
 
 if (process.env.NODE_ENV == 'development') {
     const compiler = webpack(webpackConfig)
@@ -51,7 +48,7 @@ app.use((req, res)=> {
             res.redirect(302, redirect.pathname + redirect.search)
         } else if (renderProps) {
             const unplug = plugToRequest(req, res)
-            loadOnServer({store, renderProps, redirect, baseUrl}).then(
+            loadOnServer({store, renderProps, redirect}).then(
                 ()=> {
                     // const html = ReactDOMServer.renderToString(
                     //     <Provider store={store}>
