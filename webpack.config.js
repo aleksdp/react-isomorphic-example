@@ -10,7 +10,7 @@ const config = {
     output: {
         filename: 'bundle.js',
         path: resolve(__dirname, './public'),
-        publicPath: 'http://localhost:3000/public/'
+        publicPath: isDev ? 'http://localhost:3000/public/': '/public/'
     },
 
     devtool: isDev ? 'cheap-module-eval-source-map' : '',
