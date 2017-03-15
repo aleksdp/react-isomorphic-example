@@ -1,0 +1,15 @@
+version: '2'
+services:
+  web:
+    build: .
+    container_name: projectName-node
+    restart: always
+    networks:
+     - nginx-proxy
+    environment:
+      - VIRTUAL_HOST=example.com
+
+networks:
+  nginx-proxy:
+    external:
+      name: proxy_default
