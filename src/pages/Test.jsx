@@ -22,6 +22,8 @@ export default class Test extends React.Component {
         console.log("unmount component")
     }
 
+
+
     render() {
         return (
             <div>Test component
