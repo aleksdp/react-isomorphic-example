@@ -1,11 +1,29 @@
 import React from "react"
 import {Link} from "react-router"
-import {preload} from "react-isomorphic-tools"
+import {preload, Check} from "react-isomorphic-tools"
 import Helmet from "react-helmet"
 import Test2 from "./Test2"
 
+const read = (res) => {
+    return res
+}
 
+@Check({roles:[
+    'ROLE_ADMIN'
+]})
 @preload(({fetchToState})=> {
+    return fetchToState("/events", {
+        key: "eventsList"
+    })
+}, {
+    alwaysReload: false,
+    reloadOnQueryChange: true,
+    reloadOnParamsChange: true
+})
+@preload(({fetchToState})=> {
+
+    const result = 'asdasd'
+
     return fetchToState("/events", {
         key: "eventsList"
     })
@@ -13,6 +31,7 @@ import Test2 from "./Test2"
 export default class Test extends React.Component {
     static displayName = "TestPage"
 
+    @read
     componentDidMount = () => {
         console.log("mount component")
 

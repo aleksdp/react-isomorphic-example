@@ -57,7 +57,7 @@ app.use((req, res)=> {
             res.redirect(302, redirect.pathname + redirect.search)
         } else if (renderProps) {
             const unplug = plugToRequest(req, res)
-            loadOnServer({store, renderProps, redirect}).then(
+            loadOnServer({store, renderProps}).then(
                 ()=> {
                     // const html = ReactDOMServer.renderToString(
                     //     <Provider store={store}>
@@ -68,7 +68,11 @@ app.use((req, res)=> {
                     res.status(200).send(page({store, head, html}))
                     unplug()
                 }
-            )
+            ).catch((error)=> {
+                if (error.code == 303) {
+                    res.redirect(error.location)
+                }
+            })
         } else {
             res.status(404).send('Not found')
         }
