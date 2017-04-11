@@ -4,7 +4,7 @@ import {connect} from "react-redux"
 import Helmet from "react-helmet"
 import {Link} from "react-router"
 import config from "../../../config"
-import {setBaseUrl} from "../../../react-isomorphic-tools/src/lib"
+import {setBaseUrl} from "react-isomorphic-tools"
 
 const {baseUrl} = config()
 setBaseUrl(baseUrl)
@@ -36,6 +36,9 @@ class App extends React.Component {
                     App component
                     <div>
                         <Link to="/test1">to /test1</Link>
+                    </div>
+                    <div>
+                        <Link to="/test2">to /test2</Link>
                     </div>
                     <div>
                         <Link to="/test2?q=test">to /test2?q=test</Link>

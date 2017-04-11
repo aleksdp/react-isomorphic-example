@@ -15,8 +15,12 @@ import page from './page'
 import configureStore from './configureStore'
 import {routes} from '../src/Routes'
 import loadOnServer from '../react-isomorphic-tools/src/helpers/loadOnServer'
-const app = express();
+const app = express()
+import proxy from 'express-http-proxy'
 
+import config from '../config'
+
+const {domain} = config()
 
 if (process.env.NODE_ENV == 'development') {
     const compiler = webpack(webpackConfig)
@@ -38,6 +42,11 @@ app.use('/public', express.static(resolve(__dirname, '../public')))
 app.get('/favicon:ext', (req, res)=> {
     res.sendFile(resolve(__dirname, `../assets/favicon${req.params.ext}`))
 })
+app.use('/uploads', proxy(domain, {
+    forwardPath: function (req) {
+        return '/uploads' + require('url').parse(req.url).path
+    }
+}))
 
 app.use((req, res)=> {
     const store = configureStore()
@@ -48,7 +57,7 @@ app.use((req, res)=> {
             res.redirect(302, redirect.pathname + redirect.search)
         } else if (renderProps) {
             const unplug = plugToRequest(req, res)
-            loadOnServer({store, renderProps, redirect}).then(
+            loadOnServer({store, renderProps, res}).then(
                 ()=> {
                     // const html = ReactDOMServer.renderToString(
                     //     <Provider store={store}>
@@ -59,7 +68,11 @@ app.use((req, res)=> {
                     res.status(200).send(page({store, head, html}))
                     unplug()
                 }
-            )
+            ).catch((error)=> {
+                if (error.code == 303) {
+                    res.redirect(error.location)
+                }
+            })
         } else {
             res.status(404).send('Not found')
         }

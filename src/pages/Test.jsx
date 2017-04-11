@@ -2,13 +2,16 @@ import React from "react"
 import {Link} from "react-router"
 import {preload} from "../../react-isomorphic-tools/src/lib"
 import Helmet from "react-helmet"
-import Test2 from "./Test2"
 
 
 @preload(({fetchToState})=> {
     return fetchToState("/events", {
         key: "eventsList"
     })
+}, {
+    alwaysReload: false,
+    reloadOnQueryChange: true,
+    reloadOnParamsChange: true
 })
 export default class Test extends React.Component {
     static displayName = "TestPage"
@@ -40,7 +43,6 @@ export default class Test extends React.Component {
                 <div>
                     <Link to="/test2">to /test2</Link>
                 </div>
-                <Test2/>
             </div>
         )
     }
