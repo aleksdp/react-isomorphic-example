@@ -1,15 +1,23 @@
 version: '2'
 services:
   web:
-    build: .
-    container_name: projectName-node
+    image: node
+    container_name: PROJECTNAME-node
+    working_dir: /usr/src/app
+    expose:
+      - "3000"
+    entrypoint:
+      - "yarn"
+      - "prod"
     restart: always
     networks:
      - nginx-proxy
+     - default
+    volumes:
+      - "./:/usr/src/app"
     environment:
-      - VIRTUAL_HOST=example.com
-
+      - VIRTUAL_HOST=PROJECTNAME.k-3soft.com
 networks:
   nginx-proxy:
     external:
-      name: proxy_default
+      name: serverservices_default
