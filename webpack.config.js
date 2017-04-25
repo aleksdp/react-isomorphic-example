@@ -10,7 +10,7 @@ const config = {
     output: {
         filename: 'bundle.js',
         path: resolve(__dirname, './public'),
-        publicPath: isDev ? 'http://localhost:3000/public/': '/public/'
+        publicPath: isDev ? 'http://localhost:3000/public/' : '/public/'
     },
 
     devtool: isDev ? 'cheap-module-eval-source-map' : '',
@@ -33,19 +33,21 @@ const config = {
             {
                 test: /\.(js|jsx)/,
                 exclude: /(node_modules)/,
-                loader: 'babel-loader',
-                query: {
-                    babelrc: false,
-                    presets: [
-                        "react",
-                        ["es2015", {"modules": false}],
-                        "stage-0"
-                    ],
-                    plugins: [
-                        "transform-runtime",
-                        "transform-decorators-legacy",
-                        "react-hot-loader/babel"
-                    ]
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        babelrc: false,
+                        presets: [
+                            "react",
+                            ["es2015", {"modules": false}],
+                            "stage-0"
+                        ],
+                        plugins: [
+                            "transform-runtime",
+                            "transform-decorators-legacy",
+                            "react-hot-loader/babel"
+                        ]
+                    }
                 }
             },
             {

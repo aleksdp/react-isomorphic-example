@@ -1,19 +1,18 @@
-import React from "react"
-import {Link} from "react-router"
-import {preload, Check} from "react-isomorphic-tools"
-import Helmet from "react-helmet"
-import Test2 from "./Test2"
+import React from 'react'
+import {Link} from 'react-router'
+import {preload,
+    // Check
+} from 'react-isomorphic-tools'
+import Helmet from 'react-helmet'
+import Test2 from './Test2'
 
-const read = (res) => {
-    return res
-}
 
-@Check({roles:[
-    'ROLE_ADMIN'
-]})
+// @Check({roles:[
+//     'ROLE_ADMIN'
+// ]})
 @preload(({fetchToState})=> {
-    return fetchToState("/events", {
-        key: "eventsList"
+    return fetchToState('/events', {
+        key: 'eventsList'
     })
 }, {
     alwaysReload: false,
@@ -22,40 +21,38 @@ const read = (res) => {
 })
 @preload(({fetchToState})=> {
 
-    const result = 'asdasd'
 
-    return fetchToState("/events", {
-        key: "eventsList"
+    return fetchToState('/events', {
+        key: 'eventsList'
     })
 })
 export default class Test extends React.Component {
-    static displayName = "TestPage"
+    static displayName = 'TestPage'
 
-    @read
     componentDidMount = () => {
-        console.log("mount component")
+        console.log('mount component')
 
     }
     componentWillUnmount = () => {
 
-        console.log("unmount component")
+        console.log('unmount component')
     }
 
     render() {
         return (
             <div>Test component
 
-                <Helmet title="test page"/>
+                <Helmet title='test page'/>
 
                 <div>
-                    <Link to="/">to /</Link>
+                    <Link to='/'>to /</Link>
                 </div>
 
                 <div>
-                    <Link to="/test1">to /test1</Link>
+                    <Link to='/test1'>to /test1</Link>
                 </div>
                 <div>
-                    <Link to="/test2">to /test2</Link>
+                    <Link to='/test2'>to /test2</Link>
                 </div>
                 <Test2/>
             </div>

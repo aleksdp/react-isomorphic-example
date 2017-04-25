@@ -7,10 +7,6 @@ import {resolve} from 'path'
 import express from 'express'
 import cookieParser from 'cookie-parser'
 import {plugToRequest} from 'react-cookie'
-import webpack from 'webpack'
-import webpackDevMiddleware from 'webpack-dev-middleware'
-import webpackHotMiddleware from 'webpack-hot-middleware'
-import webpackConfig from '../webpack.config'
 import page from './page'
 import configureStore from './configureStore'
 import {routes} from '../src/Routes'
@@ -23,9 +19,11 @@ import config from '../config'
 const {domain} = config()
 
 if (process.env.NODE_ENV == 'development') {
-    const compiler = webpack(webpackConfig)
 
-    app.use(webpackDevMiddleware(compiler, {
+    const webpackConfig = require('../webpack.config')
+    const compiler = require('webpack')(webpackConfig)
+
+    app.use(require('webpack-dev-middleware')(compiler, {
         publicPath: webpackConfig.output.publicPath,
         hot: true,
         stats: {
@@ -35,7 +33,7 @@ if (process.env.NODE_ENV == 'development') {
         noInfo: true
     }))
 
-    app.use(webpackHotMiddleware(compiler))
+    app.use(require('webpack-hot-middleware')(compiler))
 }
 app.use(cookieParser())
 app.use('/public', express.static(resolve(__dirname, '../public')))

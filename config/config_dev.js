@@ -1,4 +1,4 @@
-const domain = "http://api.itboost.org:82"
+const domain = 'http://api.itboost.org:82'
 
 export default {
     domain,
