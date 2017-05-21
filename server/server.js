@@ -19,14 +19,14 @@ import {ServerStyleSheet} from 'styled-components'
 
 import config from '../config'
 
-const {domain} = config()
+const {origin} = config()
 
 app.use(cookieParser())
 app.use('/public', express.static(resolve(__dirname, '../public')))
 app.get('/favicon:ext', (req, res)=> {
     res.sendFile(resolve(__dirname, `../assets/favicon${req.params.ext}`))
 })
-app.use('/uploads', proxy(domain, {
+app.use('/uploads', proxy(origin, {
     forwardPath: function (req) {
         return '/uploads' + require('url').parse(req.url).path
     }
