@@ -1,6 +1,6 @@
 import React from 'react'
-import ReactDOMServer from 'react-dom/server'
-import Helmet from 'react-helmet'
+import {renderToString} from 'react-dom/server'
+import {Helmet} from 'react-helmet'
 import {match, RouterContext} from 'react-router'
 import {Provider} from 'react-redux'
 import {resolve} from 'path'
@@ -14,27 +14,13 @@ import {loadOnServer} from 'react-isomorphic-tools'
 const app = express()
 import proxy from 'express-http-proxy'
 
+import {ServerStyleSheet} from 'styled-components'
+
+
 import config from '../config'
 
 const {domain} = config()
 
-if (process.env.NODE_ENV == 'development') {
-
-    const webpackConfig = require('../webpack.config')
-    const compiler = require('webpack')(webpackConfig)
-
-    app.use(require('webpack-dev-middleware')(compiler, {
-        publicPath: webpackConfig.output.publicPath,
-        hot: true,
-        stats: {
-
-            colors: true
-        },
-        noInfo: true
-    }))
-
-    app.use(require('webpack-hot-middleware')(compiler))
-}
 app.use(cookieParser())
 app.use('/public', express.static(resolve(__dirname, '../public')))
 app.get('/favicon:ext', (req, res)=> {
@@ -57,13 +43,17 @@ app.use((req, res)=> {
             const unplug = plugToRequest(req, res)
             loadOnServer({store, renderProps}).then(
                 ()=> {
-                    // const html = ReactDOMServer.renderToString(
-                    //     <Provider store={store}>
-                    //         <RouterContext {...renderProps}/>
-                    //     </Provider>)
-                    let html = ''
-                    const head = Helmet.rewind()
-                    res.status(200).send(page({store, head, html}))
+                    const sheet = new ServerStyleSheet()
+                    const html = renderToString(
+                        sheet.collectStyles(
+                            <Provider store={store}>
+                                <RouterContext {...renderProps}/>
+                            </Provider>
+                        )
+                    )
+                    const helmet = Helmet.renderStatic()
+                    const css = sheet.getStyleTags()
+                    res.status(200).send(page({store, helmet, html, css}))
                     unplug()
                 }
             ).catch((error)=> {
@@ -78,5 +68,5 @@ app.use((req, res)=> {
 })
 
 app.listen(3000, ()=> {
-    console.log('Listening on port 3000!')
+    console.log('Page server is listening on port 3000!')
 })

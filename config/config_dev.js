@@ -1,6 +1,6 @@
-const domain = 'http://api.itboost.org:82'
+const domain = 'api.zoozz.org'
 
 export default {
     domain,
-    baseUrl: `${domain}/app_dev.php/api`
+    baseUrl: `http://${domain}/api`
 }

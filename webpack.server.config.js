@@ -4,19 +4,30 @@ const webpack = require('webpack')
 
 const config = require('./webpack.config')
 
+const isDev = process.env.NODE_ENV == 'development'
 
+//change entry point
 config.entry = "./server/server.js"
 
+//this is node application
 config.target = "node"
-config.externals = fs.readdirSync("node_modules")
-    .reduce(function (acc, mod) {
-        if (mod === ".bin") {
-            return acc
-        }
 
-        acc[mod] = "commonjs " + mod
-        return acc
-    }, {})
+// remove for prod server eslint-loader
+!isDev && config.module.rules.splice(0, 1)
+
+// remove for dev server HotModuleReplacementPlugin
+isDev && config.plugins.splice(2, 1)
+
+//remove from server.js all common dependencies
+config.externals = [
+    (context, request, callback)=> {
+        if (request.indexOf('.') != -1) {
+            return callback()
+        }
+        return callback(null, 'commonjs ' + request)
+    }
+
+]
 
 
 config.node = {
@@ -28,11 +39,11 @@ config.node = {
     __dirname: false,
 }
 
-config.output = {
-    path: path.join(__dirname, "build"),
-    filename: "server.js",
-}
 
-config.plugins.push(new webpack.IgnorePlugin(/vertx/))
+config.output = {
+    path: path.resolve(__dirname, 'build'),
+    publicPath: isDev ? 'http://127.0.0.1:3001/public/' : '/public/',
+    filename: 'server.js'
+}
 
 module.exports = config

@@ -1,6 +1,6 @@
-const domain = 'http://api.itboost.org:82'
+const domain = 'api.zoozz.org'
 
 export default {
     domain,
-    baseUrl: `${domain}/api`
+    baseUrl: `http://${domain}/api`
 }

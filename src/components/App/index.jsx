@@ -40,13 +40,13 @@ class App extends React.Component {
                     boxShadow: '1px 1px 4px 0px rgba(50, 50, 50, 0.75)'
                 }}/>
                 <Helmet>
-                    <title>App</title>
+                    <title>Appasd</title>
                     {this.link.map((item, index)=>(
                         <link {...item} key={index}/>
                     ))}
                 </Helmet>
                 <div>
-                    App component
+                    App componentasdasd
                     <div>
                         <Link to='/test1'>to /test1</Link>
                     </div>

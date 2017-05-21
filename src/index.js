@@ -1,14 +1,9 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
 import {browserHistory} from 'react-router'
-import {AppContainer} from 'react-hot-loader'
 import {syncHistoryWithStore} from 'react-router-redux'
 import {setBaseUrl} from 'react-isomorphic-tools'
-import Application from './Application'
+import {render} from './Application'
 import configureStore from './store/configureStore'
 import config from '../config'
-
-setBaseUrl(config().baseUrl)
 
 const store = configureStore()
 const history = syncHistoryWithStore(browserHistory, store, {
@@ -17,16 +12,16 @@ const history = syncHistoryWithStore(browserHistory, store, {
     }
 })
 
-const render = () => {
-    ReactDOM.render(
-        <AppContainer>
-            <Application store={store} history={history}/>
-        </AppContainer>,
-        document.getElementById('root')
-    )
-}
+import '../assets/style.sass'
+setBaseUrl(config().baseUrl)
 
 
 render()
 
 if (module.hot) module.hot.accept('./Application', render)
+
+
+export {
+    store,
+    history
+}
