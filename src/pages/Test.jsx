@@ -32,6 +32,7 @@ export default class Test extends React.Component {
 
 
     render() {
+        const test = 'asd'
         return (
             <div>
                 Test

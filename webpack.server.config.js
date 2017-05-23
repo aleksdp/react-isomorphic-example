@@ -1,22 +1,45 @@
-const path = require("path")
-const fs = require("fs")
-const webpack = require('webpack')
+//webpack server config
 
-const config = require('./webpack.config')
+const path = require('path')
+const fs = require('fs')
+const webpack = require('webpack')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+
+const config = require('./webpack.common.config')
 
 const isDev = process.env.NODE_ENV == 'development'
 
-//change entry point
-config.entry = "./server/server.js"
+//set entry point
+config.entry = './server/server.js'
 
-//this is node application
-config.target = "node"
+//output
+config.output.path = path.resolve(__dirname, 'build')
+config.output.filename = 'server.js'
 
-// remove for prod server eslint-loader
-!isDev && config.module.rules.splice(0, 1)
+//set the node application
+config.target = 'node'
 
-// remove for dev server HotModuleReplacementPlugin
-isDev && config.plugins.splice(2, 1)
+//development
+if (isDev) {
+}
+
+
+//production
+if (!isDev) {
+
+}
+
+
+config.module.rules.push({
+    test: /\.(css|sass|scss)/,
+    use: ExtractTextPlugin.extract({
+            fallback: 'style-loader',
+            use: 'css-loader!sass-loader'
+        }
+    )
+})
+
+config.plugins.push(new ExtractTextPlugin('style.css'))
 
 //remove from server.js all common dependencies
 config.externals = [
@@ -39,11 +62,5 @@ config.node = {
     __dirname: false,
 }
 
-
-config.output = {
-    path: path.resolve(__dirname, 'build'),
-    publicPath: isDev ? 'http://127.0.0.1:3001/public/' : '/public/',
-    filename: 'server.js'
-}
 
 module.exports = config

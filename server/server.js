@@ -19,7 +19,7 @@ import {ServerStyleSheet} from 'styled-components'
 
 import config from '../config'
 
-const {origin} = config()
+const {origin} = config();
 
 app.use(cookieParser())
 app.use('/public', express.static(resolve(__dirname, '../public')))
@@ -27,7 +27,7 @@ app.get('/favicon:ext', (req, res)=> {
     res.sendFile(resolve(__dirname, `../assets/favicon${req.params.ext}`))
 })
 app.use('/uploads', proxy(origin, {
-    forwardPath: function (req) {
+    forwardPath: (req)=> {
         return '/uploads' + require('url').parse(req.url).path
     }
 }))
@@ -40,6 +40,10 @@ app.use((req, res)=> {
         } else if (redirect) {
             res.redirect(302, redirect.pathname + redirect.search)
         } else if (renderProps) {
+            store.dispatch({
+                type: 'navigator/SET_USER_AGENT',
+                payload: req.get('user-agent')
+            })
             const unplug = plugToRequest(req, res)
             loadOnServer({store, renderProps}).then(
                 ()=> {
@@ -53,7 +57,7 @@ app.use((req, res)=> {
                     )
                     const helmet = Helmet.renderStatic()
                     const css = sheet.getStyleTags()
-                    res.status(200).send(page({store, helmet, html, css}))
+                    res.status(200).send(page({store, helmet, css, html}))
                     unplug()
                 }
             ).catch((error)=> {

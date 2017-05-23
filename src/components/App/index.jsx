@@ -8,18 +8,18 @@ import {setBaseUrl} from 'react-isomorphic-tools'
 const {baseUrl} = config()
 setBaseUrl(baseUrl)
 
-class App extends React.Component {
+export default class App extends React.Component {
     constructor() {
         super();
         const isDev = process.env.NODE_ENV == 'development'
-        this.link = [{
+        this.links = [{
             rel: 'icon',
             type: 'image/png',
             href: require('../../../assets/favicon.png'),
             sizes: '150x150'
         }]
         if (!isDev) {
-            this.link.push({
+            this.links.push({
                 href: '/public/style.css',
                 type: 'text/css',
                 rel: 'stylesheet'
@@ -40,13 +40,11 @@ class App extends React.Component {
                     boxShadow: '1px 1px 4px 0px rgba(50, 50, 50, 0.75)'
                 }}/>
                 <Helmet>
-                    <title>Appasd</title>
-                    {this.link.map((item, index)=>(
-                        <link {...item} key={index}/>
-                    ))}
+                    <title>App</title>
+                    {this.links.map((item, index)=><link {...item} key={index}/>)}
                 </Helmet>
                 <div>
-                    App componentasdasd
+                    App component
                     <div>
                         <Link to='/test1'>to /test1</Link>
                     </div>
@@ -60,4 +58,3 @@ class App extends React.Component {
         )
     }
 }
-export default App
