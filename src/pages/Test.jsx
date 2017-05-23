@@ -1,6 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
-import {preload} from 'react-isomorphic-tools'
+import {preload, setLocale} from 'react-isomorphic-tools'
+import {connect} from 'react-redux'
+import {FormattedDate, FormattedMessage} from 'react-intl'
+
 
 const Button = styled.button`
   /* Adapt the colors based on primary prop */
@@ -18,6 +21,11 @@ const Button = styled.button`
         key: 'wikiTypes'
     })
 )
+@connect(state=>({
+    locale: state.getIn(['navigator', 'locale'])
+}), {
+    setLocale
+})
 export default class Test extends React.Component {
     static displayName = 'TestPage'
 
@@ -32,11 +40,17 @@ export default class Test extends React.Component {
 
 
     render() {
-        const test = 'asd'
         return (
             <div>
-                Test
-                <Button/>
+                <FormattedDate value={new Date()}/>
+
+                <FormattedMessage id='text' values={{var: 'тест'}}/>
+
+                <Button onClick={()=>this.props.setLocale('ru')}>setLocale -> RU</Button>
+                <Button onClick={()=>this.props.setLocale('en')}>setLocale -> EN</Button>
+
+                    Current Locale = {this.props.locale}
+
             </div>
         )
     }

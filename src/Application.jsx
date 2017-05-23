@@ -6,18 +6,25 @@ import {AsyncLoader} from 'react-isomorphic-tools'
 import {Provider} from 'react-redux'
 import {AppContainer} from 'react-hot-loader'
 import {store, history} from './'
-
+import {IntlProvider, addLocaleData} from 'react-intl'
+import config from '../config'
 
 const render = () => {
-    match({history, routes}, (error, redirectLocation, renderProps) => {
+    match({history, routes}, async (error, redirectLocation, renderProps) => {
+        const locale = store.getState().getIn(['navigator', 'locale']) || config().defaultLocale
+        addLocaleData([...await import(`react-intl/locale-data/${locale.split('-')[0]}`)])
+        const messages = await import(`./locales/${locale.split('-')[0]}.json`)
+
         ReactDOM.render(
             <AppContainer>
-                <Provider store={store} key='provider'>
-                    <Router history={history} {...renderProps}
-                            render={(props)=><AsyncLoader {...props}/>}>
-                        {routes}
-                    </Router>
-                </Provider>
+                <IntlProvider locale={locale} messages={messages}>
+                    <Provider store={store} key='provider'>
+                        <Router history={history} {...renderProps}
+                                render={(props)=><AsyncLoader {...props}/>}>
+                            {routes}
+                        </Router>
+                    </Provider>
+                </IntlProvider>
             </AppContainer>,
             document.getElementById('react-root')
         )

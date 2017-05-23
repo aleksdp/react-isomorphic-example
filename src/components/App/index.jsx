@@ -4,6 +4,7 @@ import {Helmet} from 'react-helmet'
 import {Link} from 'react-router'
 import config from '../../../config'
 import {setBaseUrl} from 'react-isomorphic-tools'
+import {FormattedDate} from 'react-intl'
 
 const {baseUrl} = config()
 setBaseUrl(baseUrl)
@@ -53,6 +54,9 @@ export default class App extends React.Component {
                     </div>
                 </div>
                 <hr/>
+
+                <FormattedDate value={new Date()} year='numeric' month='long' day='2-digit'/>
+
                 {this.props.children}
             </div>
         )

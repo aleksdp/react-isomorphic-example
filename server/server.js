@@ -2,6 +2,7 @@ import React from 'react'
 import {renderToString} from 'react-dom/server'
 import {Helmet} from 'react-helmet'
 import {match, RouterContext} from 'react-router'
+import {IntlProvider, addLocaleData} from 'react-intl'
 import {Provider} from 'react-redux'
 import {resolve} from 'path'
 import express from 'express'
@@ -10,16 +11,26 @@ import {plugToRequest} from 'react-cookie'
 import page from './page'
 import configureStore from './configureStore'
 import {routes} from '../src/Routes'
-import {loadOnServer} from 'react-isomorphic-tools'
+import {loadOnServer, setLocale, setUserAgent} from 'react-isomorphic-tools'
 const app = express()
 import proxy from 'express-http-proxy'
-
 import {ServerStyleSheet} from 'styled-components'
-
-
+import areIntlLocalesSupported from 'intl-locales-supported'
 import config from '../config'
 
-const {origin} = config();
+const {origin, defaultLocale, nodeLocales} = config()
+
+
+if (global.Intl) {
+    if (!areIntlLocalesSupported(nodeLocales)) {
+        require('intl')
+        Intl.NumberFormat = IntlPolyfill.NumberFormat;
+        Intl.DateTimeFormat = IntlPolyfill.DateTimeFormat;
+    }
+} else {
+    global.Intl = require('intl');
+}
+
 
 app.use(cookieParser())
 app.use('/public', express.static(resolve(__dirname, '../public')))
@@ -40,24 +51,29 @@ app.use((req, res)=> {
         } else if (redirect) {
             res.redirect(302, redirect.pathname + redirect.search)
         } else if (renderProps) {
-            store.dispatch({
-                type: 'navigator/SET_USER_AGENT',
-                payload: req.get('user-agent')
-            })
+            store.dispatch(setUserAgent(req.get('user-agent')))
+            store.dispatch(setLocale(req.cookies.locale || defaultLocale))
             const unplug = plugToRequest(req, res)
             loadOnServer({store, renderProps}).then(
                 ()=> {
+                    const locale = req.cookies.locale || config().defaultLocale
+                    const localeData = require(`react-intl/locale-data/${locale.split('-')[0]}`)
+                    const messages = require(`../src/locales/${locale.split('-')[0]}.json`)
+                    addLocaleData([...localeData])
+
                     const sheet = new ServerStyleSheet()
                     const html = renderToString(
                         sheet.collectStyles(
-                            <Provider store={store}>
-                                <RouterContext {...renderProps}/>
-                            </Provider>
+                            <IntlProvider locale={locale} initialNow={new Date()} messages={messages}>
+                                <Provider store={store}>
+                                    <RouterContext {...renderProps}/>
+                                </Provider>
+                            </IntlProvider>
                         )
                     )
                     const helmet = Helmet.renderStatic()
                     const css = sheet.getStyleTags()
-                    res.status(200).send(page({store, helmet, css, html}))
+                    res.status(200).send(page({store, helmet, html, css}))
                     unplug()
                 }
             ).catch((error)=> {
