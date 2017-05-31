@@ -77,10 +77,7 @@ app.use((req, res)=> {
                 }
             ).catch(({code, to, location, e})=> {
                 if (code == 303) {
-                    // console.log('error1', code, to, location, e)
-                    res.redirect(to + '?errorData=' + JSON.stringify({location, e}))
-                    // const to = '/'
-                    // res.redirect(to)
+                    res.redirect(to == '/error' ? to + '?errorData=' + JSON.stringify({location, e}) : to)
                 }
             })
         } else {
