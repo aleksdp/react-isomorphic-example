@@ -8,7 +8,7 @@ import {resolve} from 'path'
 import express from 'express'
 import cookieParser from 'cookie-parser'
 import {plugToRequest} from 'react-cookie'
-import page from './page'
+import page from 'react-isomorphic-tools/server/page'
 import configureStore from './configureStore'
 import {routes} from '../src/Routes'
 import {loadOnServer, setLocale, setUserAgent} from 'react-isomorphic-tools'
@@ -30,7 +30,6 @@ if (global.Intl) {
 } else {
     global.Intl = require('intl');
 }
-
 
 app.use(cookieParser())
 app.use('/public', express.static(resolve(__dirname, '../public')))
@@ -76,9 +75,12 @@ app.use((req, res)=> {
                     res.status(200).send(page({store, helmet, html, css}))
                     unplug()
                 }
-            ).catch((error)=> {
-                if (error.code == 303) {
-                    res.redirect(error.location)
+            ).catch(({code, to, location, e})=> {
+                if (code == 303) {
+                    // console.log('error1', code, to, location, e)
+                    res.redirect(to + '?errorData=' + JSON.stringify({location, e}))
+                    // const to = '/'
+                    // res.redirect(to)
                 }
             })
         } else {

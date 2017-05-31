@@ -1,10 +1,8 @@
 import React from 'react'
 import {ImmutableLoadingBar as LoadingBar} from 'react-redux-loading-bar'
 import {Helmet} from 'react-helmet'
-import {Link} from 'react-router'
 import config from '../../../config'
 import {setBaseUrl} from 'react-isomorphic-tools'
-import {FormattedDate} from 'react-intl'
 
 const {baseUrl} = config()
 setBaseUrl(baseUrl)
@@ -44,18 +42,6 @@ export default class App extends React.Component {
                     <title>App</title>
                     {this.links.map((item, index)=><link {...item} key={index}/>)}
                 </Helmet>
-                <div>
-                    App component
-                    <div>
-                        <Link to='/test1'>to /test1</Link>
-                    </div>
-                    <div>
-                        <Link to='/test2?q=test'>to /test2?q=test</Link>
-                    </div>
-                </div>
-                <hr/>
-
-                <FormattedDate value={new Date()} year='numeric' month='long' day='2-digit'/>
 
                 {this.props.children}
             </div>

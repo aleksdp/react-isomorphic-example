@@ -12,8 +12,15 @@ import config from '../config'
 const render = () => {
     match({history, routes}, async (error, redirectLocation, renderProps) => {
         const locale = store.getState().getIn(['navigator', 'locale']) || config().defaultLocale
-        addLocaleData([...await import(`react-intl/locale-data/${locale.split('-')[0]}`)])
         const messages = await import(`./locales/${locale.split('-')[0]}.json`)
+        switch (locale){
+            case 'ru':
+                addLocaleData([...await import('react-intl/locale-data/ru')])
+                break;
+            case 'en':
+                addLocaleData([...await import('react-intl/locale-data/en')])
+                break;
+        }
 
         ReactDOM.render(
             <AppContainer>

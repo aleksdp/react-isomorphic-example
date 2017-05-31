@@ -33,13 +33,16 @@ if (!isDev) {
 config.module.rules.push({
     test: /\.(css|sass|scss)/,
     use: ExtractTextPlugin.extract({
-            fallback: 'style-loader',
             use: 'css-loader!sass-loader'
         }
     )
 })
 
 config.plugins.push(new ExtractTextPlugin('style.css'))
+
+
+//rewrite additional plugins to JS/JSX files
+config.module.rules[0].use.options.env.development.plugins = []
 
 //remove from server.js all common dependencies
 config.externals = [
