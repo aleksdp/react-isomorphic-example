@@ -2,7 +2,7 @@ version: '2'
 services:
   web:
     image: node
-    container_name: PROJECTNAME-node
+    container_name: ${PROJECT_NAME}-node
     working_dir: /usr/src/app
     expose:
       - "3000"
@@ -10,14 +10,12 @@ services:
       - "yarn"
       - "prod"
     restart: always
-    networks:
-     - nginx-proxy
-     - default
+#     - default
     volumes:
       - "./:/usr/src/app"
-    environment:
-      - VIRTUAL_HOST=PROJECTNAME.k-3soft.com
-networks:
-  nginx-proxy:
-    external:
-      name: serverservices_default
+
+#  default:
+#    ipam:
+#      driver: default
+#      config:
+#        - subnet: ${SUBNET}
