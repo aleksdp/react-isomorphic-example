@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router'
 import {FormattedDate, FormattedMessage} from 'react-intl'
 import styled from 'styled-components'
-import {setLocale} from 'react-isomorphic-tools'
+import {setLocale} from '../../react-isomorphic-tools/src/lib'
 
 
 

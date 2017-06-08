@@ -1,8 +1,8 @@
 import React from 'react'
-import {preload} from 'react-isomorphic-tools'
+import {preload} from '../../react-isomorphic-tools/src/lib'
 
 
-@preload(({fetchToState})=>fetchToState('/wiki.getTypes', {
+@preload(({fetchToState})=>fetchToState('/wiki.getTypes1', {
         key: 'wikiTypes'
     })
 )

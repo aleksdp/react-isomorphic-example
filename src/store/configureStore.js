@@ -5,7 +5,7 @@ import {routerMiddleware} from 'react-router-redux'
 import {browserHistory} from 'react-router'
 import {loadingBarMiddleware} from 'react-redux-loading-bar'
 import rootReducer from '../reducers/rootReducer'
-import preload from 'react-isomorphic-tools/middlewares/preload'
+import preload from '../../react-isomorphic-tools/src/middlewares/preload'
 
 export default function configureStore() {
     const composeEnhancers = typeof window == 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : compose

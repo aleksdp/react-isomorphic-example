@@ -1,6 +1,6 @@
 import {browserHistory} from 'react-router'
 import {syncHistoryWithStore} from 'react-router-redux'
-import {setBaseUrl} from 'react-isomorphic-tools'
+import {setBaseUrl} from '../react-isomorphic-tools/src/lib'
 import {render} from './Application'
 import configureStore from './store/configureStore'
 import config from '../config'

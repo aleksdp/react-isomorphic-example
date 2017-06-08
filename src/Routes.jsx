@@ -16,7 +16,7 @@ export const routes = (
             />
         </Route>
         <Route path='/error' getComponent={(nextState, cb)=> {
-            import('react-isomorphic-tools/pages/Error').then((Component)=> {
+            import('../react-isomorphic-tools/src/pages/Error').then((Component)=> {
                 cb(null, Component.default)
             })
         }}/>

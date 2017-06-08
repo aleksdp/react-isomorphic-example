@@ -2,7 +2,7 @@ import React from 'react'
 import {ImmutableLoadingBar as LoadingBar} from 'react-redux-loading-bar'
 import {Helmet} from 'react-helmet'
 import config from '../../../config'
-import {setBaseUrl} from 'react-isomorphic-tools'
+import {setBaseUrl} from '../../../react-isomorphic-tools/src/lib'
 
 const {baseUrl} = config()
 setBaseUrl(baseUrl)
