@@ -11,7 +11,7 @@ import {plugToRequest} from 'react-cookie'
 import page from 'react-isomorphic-tools/server/page'
 import configureStore from './configureStore'
 import {routes} from '../src/Routes'
-import {loadOnServer, setLocale, setUserAgent} from 'react-isomorphic-tools'
+import {loadOnServer, setLocale, setUserAgent, errorHandler} from 'react-isomorphic-tools'
 const app = express()
 import proxy from 'express-http-proxy'
 import {ServerStyleSheet} from 'styled-components'
@@ -44,7 +44,7 @@ app.use('/uploads', proxy(origin, {
 
 app.use((req, res)=> {
     const store = configureStore()
-    match({routes, location: req.url}, (err, redirect, renderProps)=> {
+    match({routes, location: req.url}, async(err, redirect, renderProps)=> {
         if (err) {
             res.status(500).send('Internal error :(')
         } else if (redirect) {
@@ -53,33 +53,33 @@ app.use((req, res)=> {
             store.dispatch(setUserAgent(req.get('user-agent')))
             store.dispatch(setLocale(req.cookies.locale || defaultLocale))
             const unplug = plugToRequest(req, res)
-            loadOnServer({store, renderProps}).then(
-                ()=> {
-                    const locale = req.cookies.locale || config().defaultLocale
-                    const localeData = require(`react-intl/locale-data/${locale.split('-')[0]}`)
-                    const messages = require(`../src/locales/${locale.split('-')[0]}.json`)
-                    addLocaleData([...localeData])
+            try {
+                await loadOnServer({store, renderProps})
 
-                    const sheet = new ServerStyleSheet()
-                    const html = renderToString(
-                        sheet.collectStyles(
-                            <IntlProvider locale={locale} initialNow={new Date()} messages={messages}>
-                                <Provider store={store}>
-                                    <RouterContext {...renderProps}/>
-                                </Provider>
-                            </IntlProvider>
-                        )
+                const locale = req.cookies.locale || config().defaultLocale
+                const localeData = require(`react-intl/locale-data/${locale.split('-')[0]}`)
+                const messages = require(`../src/locales/${locale.split('-')[0]}.json`)
+                addLocaleData([...localeData])
+
+                const sheet = new ServerStyleSheet()
+                const html = renderToString(
+                    sheet.collectStyles(
+                        <IntlProvider locale={locale} initialNow={new Date()} messages={messages}>
+                            <Provider store={store}>
+                                <RouterContext {...renderProps}/>
+                            </Provider>
+                        </IntlProvider>
                     )
-                    const helmet = Helmet.renderStatic()
-                    const css = sheet.getStyleTags()
-                    res.status(200).send(page({store, helmet, html, css}))
-                    unplug()
-                }
-            ).catch(({code, to, location, e})=> {
-                if (code == 303) {
-                    res.redirect(to == '/error' ? to + '?errorData=' + JSON.stringify({location, e}) : to)
-                }
-            })
+                )
+                const helmet = Helmet.renderStatic()
+                const css = sheet.getStyleTags()
+                res.status(200).send(page({store, helmet, html, css}))
+                unplug()
+
+            }
+            catch (error) {
+                errorHandler({error, req, res})
+            }
         } else {
             res.status(404).send('Not found')
         }

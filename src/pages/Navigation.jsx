@@ -37,7 +37,6 @@ export default class Navigation extends React.Component {
                 <Button onClick={()=>this.props.setLocale('en')}>setLocale -> EN</Button>
 
                 Current Locale = {this.props.locale}
-
                 <hr/>
 
                 {this.props.children}

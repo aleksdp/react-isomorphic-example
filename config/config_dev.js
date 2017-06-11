@@ -1,7 +1,7 @@
 const https = process.env.HTTPS
 
 //
-const domain = 'api.zoozz.org'
+const domain = '127.0.0.1:3002'
 const defaultLocale = 'en'
 const nodeLocales = [
     'ru-RU'

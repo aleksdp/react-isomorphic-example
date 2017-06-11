@@ -17,7 +17,7 @@ export const routes = (
         </Route>
         <Route path='/error' getComponent={(nextState, cb)=> {
             import('react-isomorphic-tools/pages/Error').then((Component)=> {
-                cb(null, Component.default)
+                cb(null, Component)
             })
         }}/>
     </Route>

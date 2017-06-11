@@ -2,8 +2,8 @@ import React from 'react'
 import {preload} from 'react-isomorphic-tools'
 
 
-@preload(({fetchToState})=>fetchToState('/wiki.getTypes', {
-        key: 'wikiTypes'
+@preload(({fetchToState})=>fetchToState('/groups/1', {
+        key: 'tags'
     })
 )
 export default class Test extends React.Component {
