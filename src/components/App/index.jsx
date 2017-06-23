@@ -1,11 +1,12 @@
 import React from 'react'
 import {ImmutableLoadingBar as LoadingBar} from 'react-redux-loading-bar'
 import {Helmet} from 'react-helmet'
-import config from '../../../config'
-import {setBaseUrl} from 'react-isomorphic-tools'
+import {renderRoutes} from 'react-router-config'
+// import config from '../../../config'
+// import {setBaseUrl} from 'react-isomorphic-tools'
 
-const {baseUrl} = config()
-setBaseUrl(baseUrl)
+// const {baseUrl} = config()
+// setBaseUrl(baseUrl)
 
 export default class App extends React.Component {
     constructor() {
@@ -42,8 +43,7 @@ export default class App extends React.Component {
                     <title>App</title>
                     {this.links.map((item, index)=><link {...item} key={index}/>)}
                 </Helmet>
-
-                {this.props.children}
+                {renderRoutes(this.props.route.routes)}
             </div>
         )
     }

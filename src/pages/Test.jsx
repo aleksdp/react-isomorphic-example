@@ -1,5 +1,5 @@
 import React from 'react'
-import {preload} from 'react-isomorphic-tools'
+// import {preload} from 'react-isomorphic-tools'
 
 
 @preload(({fetchToState})=>fetchToState('/groups/1', {
