@@ -2,11 +2,11 @@ import React from 'react'
 import {ImmutableLoadingBar as LoadingBar} from 'react-redux-loading-bar'
 import {Helmet} from 'react-helmet'
 import {renderRoutes} from 'react-router-config'
-// import config from '../../../config'
-// import {setBaseUrl} from 'react-isomorphic-tools'
+import config from '../../../config'
+import {setBaseUrl} from '../../../react-isomorphic-tools/src/lib'
 
-// const {baseUrl} = config()
-// setBaseUrl(baseUrl)
+const {baseUrl} = config()
+setBaseUrl(baseUrl)
 
 export default class App extends React.Component {
     constructor() {

@@ -11,8 +11,6 @@ import preload from '../../react-isomorphic-tools/src/middlewares/preload'
 
 export default function configureStore() {
     const composeEnhancers = typeof window == 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : compose
-
-    console.log(history)
     const store = composeEnhancers(
         applyMiddleware(thunk),
         applyMiddleware(preload(history)),
