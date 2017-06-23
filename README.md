@@ -20,6 +20,6 @@ Works:
  - [x] Preload data before transition
  - [x] Preload data for ServerSide
  - [x] Chunks over getComponent: ()=>import('./component/Home')
- - [x] Handle Errors client/server
+ - [x] Handler of errors both client and server
  
 to be continued...
