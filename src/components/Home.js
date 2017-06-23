@@ -1,5 +1,5 @@
 import React from 'react'
-import {Link} from '../../react-isomorphic-tools/src/lib'
+import {Link} from 'react-isomorphic-tools'
 
 const Home = () => {
 

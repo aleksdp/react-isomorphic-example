@@ -5,8 +5,8 @@ import {routerMiddleware} from 'react-router-redux'
 import {loadingBarMiddleware} from 'react-redux-loading-bar'
 import rootReducer from '../reducers/rootReducer'
 import {history} from '../index'
-import {PRELOAD_START, PRELOAD_SUCCESS, PRELOAD_FAIL} from '../../react-isomorphic-tools/src/constants'
-import preload from '../../react-isomorphic-tools/src/middlewares/preload'
+import {PRELOAD_START, PRELOAD_SUCCESS, PRELOAD_FAIL} from 'react-isomorphic-tools/constants'
+import preload from 'react-isomorphic-tools/middlewares/preload'
 
 
 export default function configureStore() {
