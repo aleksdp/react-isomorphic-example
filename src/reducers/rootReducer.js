@@ -1,5 +1,5 @@
-import {combineReducers} from 'redux-immutable'
+import {combineReducers} from 'redux'
 import * as reducers from './'
-import * as baseReducers from 'react-isomorphic-tools/reducers/immutable'
+import * as baseReducers from 'react-isomorphic-tools/reducers'
 
 export default combineReducers(Object.assign(baseReducers, reducers))

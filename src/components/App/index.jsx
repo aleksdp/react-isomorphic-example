@@ -1,5 +1,5 @@
 import React from 'react'
-import {ImmutableLoadingBar as LoadingBar} from 'react-redux-loading-bar'
+import LoadingBar from 'react-redux-loading-bar'
 import {Helmet} from 'react-helmet'
 import {renderRoutes} from 'react-router-config'
 import config from '../../../config'

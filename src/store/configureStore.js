@@ -1,5 +1,4 @@
 import {createStore, applyMiddleware, compose} from 'redux'
-import Immutable from 'immutable'
 import thunk from 'redux-thunk'
 import {routerMiddleware} from 'react-router-redux'
 import {loadingBarMiddleware} from 'react-redux-loading-bar'
@@ -16,7 +15,7 @@ export default function configureStore() {
         applyMiddleware(preload(history)),
         applyMiddleware(routerMiddleware(history)),
         applyMiddleware(loadingBarMiddleware({promiseTypeSuffixes: [PRELOAD_START, PRELOAD_SUCCESS, PRELOAD_FAIL]})),
-    )(createStore)(rootReducer, Immutable.fromJS(typeof window == 'object' ? window.__data : {}))
+    )(createStore)(rootReducer, typeof window == 'object' ? window.__data : {})
 
     if (module.hot) {
         module.hot.accept('../reducers/rootReducer', () => {

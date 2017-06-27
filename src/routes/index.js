@@ -43,10 +43,8 @@ const routes = [
                     {
                         path: '/test:id',
                         component: Home,
-                        preload: async({fetcher})=> {
-                            // console.log(props)
-                            await fetcher('http://api.zoozz.org/app_dev.php/api/wiki.getTypes', {baseUrl: ''})
-                            await fetcher('http://api.zoozz.org/api/wiki.getTypes', {baseUrl: ''})
+                        preload: async({fetchToState})=> {
+                            await fetchToState('http://api.zoozz.org/api/wiki.getTypes', {baseUrl: '', key: 'animalTypes'})
                         },
                         strict: false,
                         exact: false,
