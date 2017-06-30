@@ -1,6 +1,6 @@
 {
   "name": "react-isomorphic-example",
-  "version": "2.0.1",
+  "version": "2.0.0",
   "description": "react",
   "main": "index.js",
   "scripts": {

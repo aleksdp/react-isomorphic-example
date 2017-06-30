@@ -1,17 +1,13 @@
 import React from 'react'
-import {connect} from 'react-redux'
 import LoadingBar from 'react-redux-loading-bar'
 import {Helmet} from 'react-helmet'
 import {renderRoutes} from 'react-router-config'
 import config from '../../../config'
-import {setBaseUrl} from '../../../react-isomorphic-tools/src/lib'
+import {setBaseUrl} from 'react-isomorphic-tools'
 
 const {baseUrl} = config()
 setBaseUrl(baseUrl)
 
-@connect(state=>({
-    loadingBar: state.loadingBar
-}))
 export default class App extends React.Component {
     constructor() {
         super();
@@ -33,7 +29,6 @@ export default class App extends React.Component {
     }
 
     render() {
-        console.log(this.props.loadingBar)
         return (
             <div>
                 <LoadingBar style={{

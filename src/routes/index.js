@@ -4,7 +4,7 @@
 import App from '../components/App'
 import Home from '../components/Home'
 import Navigation from '../pages/Navigation'
-import Error from '../../react-isomorphic-tools/src/pages/Error'
+import Error from 'react-isomorphic-tools/pages/Error'
 // import {renderRoutes} from 'react-router-config'
 // import {Link} from 'react-router-dom'
 //
@@ -44,9 +44,7 @@ const routes = [
                         path: '/test:id',
                         component: Home,
                         preload: async({fetchToState})=> {
-
-                            await fetchToState('http://api.zoozz.org/app_dev.php/api/wiki.getTypes', {baseUrl: '', key: 'animalTypes'})
-                            await fetchToState('http://api.zoozz.org/app_dev.php/api/wiki.getTypes', {baseUrl: '', key: 'animalTypes'})
+                            await fetchToState('http://api.zoozz.org/api/wiki.getTypes', {baseUrl: '', key: 'animalTypes'})
                         },
                         strict: false,
                         exact: false,
@@ -59,6 +57,7 @@ const routes = [
         ]
     }
 ]
+
 
 export {
     routes
