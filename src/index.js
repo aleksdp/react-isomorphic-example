@@ -1,4 +1,4 @@
-import {setBaseUrl} from 'react-isomorphic-tools'
+import {setBaseUrl} from '../react-isomorphic-tools/src/lib'
 import createHistory from 'history/createBrowserHistory'
 import {render} from './Application'
 import configureStore from './store/configureStore'

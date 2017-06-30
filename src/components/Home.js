@@ -1,16 +1,17 @@
 import React from 'react'
-import {Link} from 'react-isomorphic-tools'
-import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
+// import {connect} from 'react-redux'
 
-@connect(state=>({
-    animalTypes: state.fetchData.animalTypes.response.response
-}))
+// @connect(state=>({
+//     animalTypes: state.fetchData
+// }))
 export default class Home extends React.Component {
     render() {
+        console.log('animalTypes.response.response')
         return <div>
             <p>Home</p>
             <ul>
-                {this.props.animalTypes.map((item, index)=> <li key={index}>{item.type_name}</li>)}
+                {/*{this.props.animalTypes.map((item, index)=> <li key={index}>{item.type_name}</li>)}*/}
             </ul>
 
 

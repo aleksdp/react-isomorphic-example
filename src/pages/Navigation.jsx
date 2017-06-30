@@ -1,6 +1,6 @@
 import React from 'react'
 // import {connect} from 'react-redux'
-import {Link} from 'react-isomorphic-tools'
+import {Link} from 'react-router-dom'
 // import {FormattedDate, FormattedMessage} from 'react-intl'
 // import styled from 'styled-components'
 // import {setLocale} from 'react-isomorphic-tools'
@@ -23,7 +23,7 @@ export default class Navigation extends React.Component {
                         <Link to={{pathname: '/test1'}}>to /test1</Link>
                     </div>
                     <div>
-                        <Link to={{pathname: '/test2', query: {q: 'test'}}}>to /test2?q=test</Link>
+                        <Link to={{pathname: '/test2', search: 'q=test'}}>to /test2?q=test</Link>
                     </div>
                 </div>
 
