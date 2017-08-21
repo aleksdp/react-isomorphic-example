@@ -142,6 +142,20 @@ const config = {
                         name: 'svg/[hash].[ext]'
                     }
                 },
+            },
+            {
+                test: /\.md$/,
+                use: [
+                    {
+                        loader: 'html-loader'
+                    },
+                    {
+                        loader: 'markdown-loader',
+                        options: {
+                            /* your options here */
+                        }
+                    }
+                ]
             }
         ]
     },
@@ -149,7 +163,9 @@ const config = {
     plugins: [
         new webpack.DefinePlugin({
             'process.env': {
-                NODE_ENV: isDev ? '"development"' : '"production"'
+                NODE_ENV: isDev ? '"development"' : '"production"',
+                API_DOMAIN: `'${process.env.API_DOMAIN}'`,
+                HTTPS: process.env.HTTPS,
             },
             _development_: isDev
         }),

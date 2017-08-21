@@ -34,13 +34,14 @@ export default class App extends React.Component {
                 <LoadingBar style={{
                     backgroundColor: '#f00',
                     top: 0,
-                    height: '2px',
+                    height: '1px',
                     zIndex: '10000',
                     position: 'fixed',
                     boxShadow: '1px 1px 4px 0px rgba(50, 50, 50, 0.75)'
-                }}/>
+                }}
+                            updateTime={50} progressIncrease={50}/>
                 <Helmet>
-                    <title>App</title>
+                    <title>Example App</title>
                     {this.links.map((item, index)=><link {...item} key={index}/>)}
                 </Helmet>
                 {renderRoutes(this.props.route.routes)}

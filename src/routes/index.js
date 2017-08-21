@@ -1,34 +1,15 @@
-// import
-// import {Link} from '../../react-isomorphic-tools/src/lib'
-// import React from 'react'
 import App from '../components/App'
-import Home from '../components/Home'
-import Navigation from '../pages/Navigation'
 import Error from 'react-isomorphic-tools/pages/Error'
-// import {renderRoutes} from 'react-router-config'
-// import {Link} from 'react-router-dom'
-//
-// const Root = (props) => {
-//
-//
-//     return <div>
-//         <p>root</p>
-//         <Link to='/home'>Home</Link>
-//         <Link to={{pathname: '/home', query: {q: '1'}}}>Home</Link>
-//         <Link to={{pathname: '/home', query: {q: '2'}}}>Home</Link>
-//         <Link to={{pathname: '/home', query: {q: '3'}}}>Home</Link>
-//         <Link to={{pathname: '/home', query: {q: '4'}}}>Home</Link>
-//         <Link to={{pathname: '/home', query: {q: '5'}}}>Home</Link>
-//         {renderRoutes(props.route.routes)}
-//     </div>
-// }
-
+import Home from '../views/Home'
+import About from '../views/About'
+import Test from '../views/Test'
+import TestFull from '../views/TestFull'
+import * as actions from '../actions'
 
 const routes = [
     {
         component: App,
         routes: [
-
             {
                 path: '/error',
                 component: Error,
@@ -37,20 +18,29 @@ const routes = [
             },
             {
                 path: '/',
-                component: Navigation,
-                exact: false,
-                routes: [
+                component: Home,
+                routes:[
                     {
-                        path: '/test:id',
-                        component: Home,
-                        preload: async({fetchToState})=> {
-                            await fetchToState('http://api.zoozz.org/api/wiki.getTypes', {baseUrl: '', key: 'animalTypes'})
+                        path: '/',
+                        component: About,
+                        exact: true
+                    },
+                    {
+                        path: '/test',
+                        component: Test,
+                        preload: actions.test,
+                        preloadOptions:{
+                            alwaysReload: true
                         },
-                        strict: false,
-                        exact: false,
-                        // preloadOptions:{
-                        //     alwaysReload: true
-                        // }
+                        exact: true
+                    },
+                    {
+                        path: '/test/:id',
+                        component: TestFull,
+                        preload: actions.testFull,
+                        preloadOptions:{
+                            alwaysReload: true
+                        }
                     }
                 ]
             }

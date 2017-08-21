@@ -12,6 +12,6 @@ export default {
     domain,
     origin,
     baseUrl: origin + '/api',
-    nodeLocales,
-    defaultLocale
+    defaultLocale,
+    nodeLocales
 }
