@@ -2,7 +2,7 @@
 
 You can see demo here:
 
-[react-example.k-3soft.com](http://react-example.k-3soft.com)
+[react-isomorphic-example.k-3soft.com](http://react-isomorphic-example.k-3soft.com)
 
 
 
