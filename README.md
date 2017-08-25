@@ -20,7 +20,7 @@
  10. webpack@^3.5.5
  11. jest@^20.0.4
  12. enzyme@^2.9.1
- 13. expressjs@^2.9.1
+ 13. expressjs@^4.15.4
 
 ### Works:
 
