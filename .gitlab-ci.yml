@@ -9,6 +9,7 @@ build:
   before_script:
     - yarn --force
   script:
+    - yarn test
     - export HTTPS=false && yarn build
     - tar -cf package.tar --exclude=./package.tar ./
   artifacts:
