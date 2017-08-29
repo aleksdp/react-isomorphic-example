@@ -150,10 +150,7 @@ const config = {
                         loader: 'html-loader'
                     },
                     {
-                        loader: 'markdown-loader',
-                        options: {
-                            /* your options here */
-                        }
+                        loader: 'markdown-loader'
                     }
                 ]
             }
@@ -163,9 +160,7 @@ const config = {
     plugins: [
         new webpack.DefinePlugin({
             'process.env': {
-                NODE_ENV: isDev ? '"development"' : '"production"',
-                API_DOMAIN: `'${process.env.API_DOMAIN}'`,
-                HTTPS: process.env.HTTPS,
+                NODE_ENV: isDev ? '"development"' : '"production"'
             },
             _development_: isDev
         }),

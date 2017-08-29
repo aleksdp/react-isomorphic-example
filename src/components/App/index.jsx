@@ -5,8 +5,8 @@ import {renderRoutes} from 'react-router-config'
 import config from '../../../config'
 import {setBaseUrl} from 'react-isomorphic-tools'
 
-const {baseUrl} = config()
-setBaseUrl(baseUrl)
+const {APP_API_BASE_URL} = config()
+setBaseUrl(APP_API_BASE_URL)
 
 export default class App extends React.Component {
     constructor() {

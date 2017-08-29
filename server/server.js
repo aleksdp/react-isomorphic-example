@@ -7,10 +7,10 @@ import serverMiddleware from './serverMiddleware'
 import config from '../config'
 
 const app = express()
-const {nodeLocales, origin} = config()
+const {APP_NODE_LOCALES, APP_API_ORIGIN} = config()
 
 if (global.Intl) {
-    if (!areIntlLocalesSupported(nodeLocales)) {
+    if (!areIntlLocalesSupported(APP_NODE_LOCALES)) {
         require('intl')
         Intl.NumberFormat = IntlPolyfill.NumberFormat;
         Intl.DateTimeFormat = IntlPolyfill.DateTimeFormat;
@@ -24,7 +24,7 @@ app.use('/public', express.static(resolve(__dirname, '../public')))
 app.get('/favicon:ext', (req, res)=> {
     res.sendFile(resolve(__dirname, `../assets/favicon${req.params.ext}`))
 })
-app.use('/uploads', proxy({target: origin, changeOrigin: true}))
+app.use('/uploads', proxy({target: APP_API_ORIGIN, changeOrigin: true}))
 app.use(serverMiddleware)
 
 
